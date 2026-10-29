@@ -1,0 +1,13 @@
+# Base de datos local
+data/processed/*.db
+
+# Archivos generados por Python
+__pycache__/
+*.pyc
+
+# Variables de entorno
+.env
+
+# Entornos virtuales locales
+.venv/
+venv/
