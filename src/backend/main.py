@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from src.backend.database import (
+from src.backend.services import (
     init_db,
     crear_deportista,
     obtener_deportistas,
@@ -9,7 +9,7 @@ from src.backend.database import (
     obtener_ultima_prediccion
 )
 
-from src.api.schemas import (
+from src.backend.models import (
     DeportistaCreate,
     DeportistaResponse,
     SesionCreate,

@@ -1,8 +1,7 @@
 import sqlite3
-from pathlib import Path
+from src.config import DB_PATH
 
 
-DB_PATH = Path("data/processed/athletaguard.db")
 
 
 def get_connection():
