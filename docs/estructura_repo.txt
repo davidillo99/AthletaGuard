@@ -1,0 +1,124 @@
+ESTRUCTURA REAL DEL REPOSITORIO (generada desde git ls-files)
+
+AthletaGuard/
+├── data/
+│   └── raw/
+│       ├── subjective/
+│       │   └── (19 archivos originales, sin modificar)
+│       └── README.md
+├── docs/
+│   ├── evidencias/
+│   │   ├── 01_dashboard_prediccion.png
+│   │   ├── 02_dashboard_filtro.png
+│   │   ├── 03_dashboard_error.png
+│   │   ├── 04_dashboard_movil.png
+│   │   ├── 05_swagger.png
+│   │   ├── exploracion_datos.txt
+│   │   └── pytest_resultado.txt
+│   ├── experiments/
+│   │   ├── metricas_v1.0.json
+│   │   └── metricas_v1.0.md
+│   ├── arquitectura.md
+│   ├── AthletaGuard_NF2_Documentacion_Diseno_Tecnico_Corregido.pdf
+│   ├── checklist_reproducibilidad.md
+│   ├── estructura_repo.txt
+│   ├── limitaciones.md
+│   ├── NF1_Presentacion_alineacion_viabilidad_Sport_Analytics_Model_Training.pdf
+│   └── NF3_borrador.md
+├── environment/
+│   └── python_version.txt
+├── models/
+│   └── metadata.json
+├── notebooks/
+│   └── exploracion_datos.py
+├── src/
+│   ├── backend/
+│   │   ├── __init__.py
+│   │   ├── api.py
+│   │   ├── main.py
+│   │   ├── models.py
+│   │   └── services.py
+│   ├── frontend/
+│   │   ├── app.js
+│   │   ├── chart.umd.js
+│   │   ├── index.html
+│   │   └── styles.css
+│   ├── pipeline/
+│   │   ├── __init__.py
+│   │   ├── features.py
+│   │   ├── ingest.py
+│   │   └── train.py
+│   ├── __init__.py
+│   └── config.py
+├── tests/
+│   ├── test_api.py
+│   ├── test_features.py
+│   └── test_pipeline.py
+├── .env.example
+├── .gitattributes
+├── .gitignore
+├── pytest.ini
+├── README.md
+└── requirements.txt
+
+Archivos generados, no versionados:
+- data/processed/: athletaguard.db y CSV limpios, creados por src/pipeline/ingest.py.
+- models/modelo.joblib: modelo con sus metadatos, creado por src/pipeline/train.py.
+
+EXPLICACIÓN POR MÓDULO
+
+Raíz
+- README.md: requisitos, comandos, variables de entorno y estado.
+- requirements.txt: dependencias con versiones fijadas.
+- .env.example: variables de entorno de ejemplo, sin secretos.
+- .gitattributes: conserva los datos originales byte a byte al clonar.
+- .gitignore: excluye entornos, secretos y artefactos que se regeneran.
+- pytest.ini: permite importar src desde las pruebas.
+
+src/config.py
+- Lee DB_PATH, MODEL_PATH y PORT del entorno o de .env, con valores por defecto.
+
+src/pipeline/ (proceso batch)
+- ingest.py: lee, limpia y valida los datos, informa de los descartes y carga SQLite y data/processed/.
+- features.py: calcula las 21 features sin datos futuros, la etiqueta y el dataset de modelado.
+- train.py: validación temporal, hiperparámetros, umbrales, métricas y guardado del modelo.
+
+src/backend/ (API)
+- main.py: punto de entrada; crea la aplicación y sirve el dashboard.
+- api.py: endpoints; traduce los errores a códigos HTTP 404, 422 y 503.
+- models.py: esquemas Pydantic, aviso no médico y definición de las tablas SQLite.
+- services.py: acceso a la base de datos, carga del modelo e inferencia.
+
+src/frontend/ (dashboard)
+- index.html: estructura de la pantalla y aviso no médico.
+- app.js: llamadas a la API, gráficos, tablas y mensajes de error.
+- styles.css: estilos, incluidos los colores de riesgo.
+- chart.umd.js: Chart.js 4.4.9 (licencia MIT), incluido para funcionar sin internet.
+
+tests/
+- test_features.py: ventanas, ausencia de datos futuros y etiqueta.
+- test_pipeline.py: limpieza, partición temporal, umbrales y modelo guardado.
+- test_api.py: endpoints, errores y dashboard, con base de datos temporal.
+
+notebooks/
+- exploracion_datos.py: reproduce las cifras con las que se decidió el tratamiento de los datos.
+
+data/raw/
+- README.md: ficha de datos, cita y licencia.
+- subjective/: datos originales de SoccerMon.
+
+models/
+- metadata.json: features, umbrales y versión del modelo entrenado.
+
+environment/
+- python_version.txt: versión de Python utilizada.
+
+docs/
+- PDF de NF1 y NF2: documentos entregados en fases anteriores.
+- NF3_borrador.md: borrador del PDF de entrega.
+- arquitectura.md: arquitectura real y comparación con NF2.
+- limitaciones.md: bugs, atajos y partes incompletas.
+- checklist_reproducibilidad.md: lista de comprobación.
+- estructura_repo.txt: este documento.
+- experiments/: métricas del modelo.
+- evidencias/: resultado de pytest, salida de la exploración y capturas.

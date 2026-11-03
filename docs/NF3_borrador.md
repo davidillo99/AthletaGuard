@@ -137,7 +137,66 @@ Coincide con las capas de NF2 §4. Las desviaciones principales, todas justifica
 Árbol real del repositorio, con los datos originales resumidos:
 
 ```text
-<!--ARBOL-->
+AthletaGuard/
+├── data/
+│   └── raw/
+│       ├── subjective/
+│       │   └── (19 archivos originales, sin modificar)
+│       └── README.md
+├── docs/
+│   ├── evidencias/
+│   │   ├── 01_dashboard_prediccion.png
+│   │   ├── 02_dashboard_filtro.png
+│   │   ├── 03_dashboard_error.png
+│   │   ├── 04_dashboard_movil.png
+│   │   ├── 05_swagger.png
+│   │   ├── exploracion_datos.txt
+│   │   └── pytest_resultado.txt
+│   ├── experiments/
+│   │   ├── metricas_v1.0.json
+│   │   └── metricas_v1.0.md
+│   ├── arquitectura.md
+│   ├── AthletaGuard_NF2_Documentacion_Diseno_Tecnico_Corregido.pdf
+│   ├── checklist_reproducibilidad.md
+│   ├── estructura_repo.txt
+│   ├── limitaciones.md
+│   ├── NF1_Presentacion_alineacion_viabilidad_Sport_Analytics_Model_Training.pdf
+│   └── NF3_borrador.md
+├── environment/
+│   └── python_version.txt
+├── models/
+│   └── metadata.json
+├── notebooks/
+│   └── exploracion_datos.py
+├── src/
+│   ├── backend/
+│   │   ├── __init__.py
+│   │   ├── api.py
+│   │   ├── main.py
+│   │   ├── models.py
+│   │   └── services.py
+│   ├── frontend/
+│   │   ├── app.js
+│   │   ├── chart.umd.js
+│   │   ├── index.html
+│   │   └── styles.css
+│   ├── pipeline/
+│   │   ├── __init__.py
+│   │   ├── features.py
+│   │   ├── ingest.py
+│   │   └── train.py
+│   ├── __init__.py
+│   └── config.py
+├── tests/
+│   ├── test_api.py
+│   ├── test_features.py
+│   └── test_pipeline.py
+├── .env.example
+├── .gitattributes
+├── .gitignore
+├── pytest.ini
+├── README.md
+└── requirements.txt
 ```
 
 ## 7. Repositorio versionado y reproducible
@@ -155,7 +214,7 @@ Coincide con las capas de NF2 §4. Las desviaciones principales, todas justifica
 
 **Cita de los datos:** Midoglu C, Winther AK, Boeker M, et al. *A large-scale multivariate soccer athlete health, performance, and position monitoring dataset.* Scientific Data. 2024;11:553. doi:10.1038/s41597-024-03386-x. Dataset: doi:10.5281/zenodo.10033832.
 
-**Resultado de las pruebas:** [PENDIENTE_AUTO_PYTEST]
+**Resultado de las pruebas:** `31 passed, 1 warning in 4.44s`, sobre un clon limpio. El aviso es de obsolescencia de `httpx` en el cliente de pruebas (ver `docs/limitaciones.md`).
 
 ## 8. Explicación por módulo
 

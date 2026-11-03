@@ -1,0 +1,46 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\David\AppData\Local\Temp\claude\b6879cd429a48ef1\d62b6677-63b6-43e4-a930-4602f923ea47\scratchpad\limpio2\.venv\Scripts\python.exe
+rootdir: C:\Users\David\AppData\Local\Temp\claude\b6879cd429a48ef1\d62b6677-63b6-43e4-a930-4602f923ea47\scratchpad\limpio2
+configfile: pytest.ini
+plugins: anyio-4.16.0
+collecting ... collected 31 items
+
+tests/test_api.py::test_health PASSED                                    [  3%]
+tests/test_api.py::test_listar_deportistas PASSED                        [  6%]
+tests/test_api.py::test_predict_valido_y_se_guarda_en_el_historial PASSED [  9%]
+tests/test_api.py::test_predict_sin_fecha_usa_el_ultimo_dia_valido PASSED [ 12%]
+tests/test_api.py::test_predict_entrada_invalida_devuelve_422[cuerpo0] PASSED [ 16%]
+tests/test_api.py::test_predict_entrada_invalida_devuelve_422[cuerpo1] PASSED [ 19%]
+tests/test_api.py::test_predict_entrada_invalida_devuelve_422[cuerpo2] PASSED [ 22%]
+tests/test_api.py::test_predict_entrada_invalida_devuelve_422[cuerpo3] PASSED [ 25%]
+tests/test_api.py::test_predict_entrada_invalida_devuelve_422[cuerpo4] PASSED [ 29%]
+tests/test_api.py::test_predict_fecha_no_valida_devuelve_422_y_no_guarda[2021-03-09] PASSED [ 32%]
+tests/test_api.py::test_predict_fecha_no_valida_devuelve_422_y_no_guarda[2021-03-11] PASSED [ 35%]
+tests/test_api.py::test_predict_fecha_no_valida_devuelve_422_y_no_guarda[2030-01-01] PASSED [ 38%]
+tests/test_api.py::test_deportista_inexistente_devuelve_404 PASSED       [ 41%]
+tests/test_api.py::test_sin_modelo_devuelve_503 PASSED                   [ 45%]
+tests/test_api.py::test_sin_base_de_datos_devuelve_503 PASSED            [ 48%]
+tests/test_api.py::test_historial_filtra_por_fechas PASSED               [ 51%]
+tests/test_api.py::test_el_dashboard_se_sirve_en_la_raiz PASSED          [ 54%]
+tests/test_features.py::test_las_features_no_usan_datos_futuros PASSED   [ 58%]
+tests/test_features.py::test_ventanas_de_carga_y_acwr PASSED             [ 61%]
+tests/test_features.py::test_acwr_nulo_sin_carga_cronica PASSED          [ 64%]
+tests/test_features.py::test_racha_sin_seguimiento_empieza_en_14_dias PASSED [ 67%]
+tests/test_features.py::test_etiqueta_mira_solo_al_dia_siguiente PASSED  [ 70%]
+tests/test_features.py::test_dataset_excluye_filas_no_validas PASSED     [ 74%]
+tests/test_pipeline.py::test_limpiar_sesiones_descarta_y_cuenta_cada_motivo PASSED [ 77%]
+tests/test_pipeline.py::test_limpiar_bienestar_anula_solo_el_valor_erroneo PASSED [ 80%]
+tests/test_pipeline.py::test_lectura_de_los_datos_reales PASSED          [ 83%]
+tests/test_pipeline.py::test_alias_consecutivos_por_equipo PASSED        [ 87%]
+tests/test_pipeline.py::test_separacion_y_cortes_respetan_el_orden_temporal PASSED [ 90%]
+tests/test_pipeline.py::test_umbrales_y_niveles_de_riesgo PASSED         [ 93%]
+tests/test_pipeline.py::test_umbrales_incoherentes_detienen_el_entrenamiento PASSED [ 96%]
+tests/test_pipeline.py::test_el_modelo_guardado_carga_y_predice PASSED   [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\David\AppData\Local\Temp\claude\b6879cd429a48ef1\d62b6677-63b6-43e4-a930-4602f923ea47\scratchpad\limpio2\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 31 passed, 1 warning in 4.44s ========================
