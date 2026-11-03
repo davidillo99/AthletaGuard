@@ -120,7 +120,8 @@ def obtener_historial(id_deportista, desde=None, hasta=None):
         deportista = _buscar_deportista(conexion, id_deportista)
         metricas = _consultar(
             conexion,
-            """SELECT fecha, carga_dia, carga_7d, carga_28d, acwr, sin_seguimiento
+            """SELECT fecha, carga_dia, carga_7d, carga_28d, acwr, fatiga_media_7d,
+                      dolor_muscular_media_7d, calidad_sueno_media_7d, sin_seguimiento
                FROM metricas_derivadas WHERE id_deportista = ?{filtro} ORDER BY fecha""",
             id_deportista, desde, hasta,
         )

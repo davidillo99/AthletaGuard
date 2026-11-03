@@ -1,1 +1,228 @@
-/* Estilos del dashboard. Se implementan en la Fase 5. */
+/* Estilos del dashboard: sencillos, legibles y con contraste suficiente (NF2 §8.3). */
+
+:root {
+  --fondo: #f5f5f3;
+  --superficie: #ffffff;
+  --texto: #1b1b1a;
+  --texto-suave: #52514e;
+  --borde: #d6d5d0;
+  --acento: #1f5fae;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-inline: 16px;
+  background: var(--fondo);
+  color: var(--texto);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+header,
+main,
+footer {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+header {
+  padding-block: 16px 8px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+header p {
+  margin: 0;
+  color: var(--texto-suave);
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+footer {
+  padding-block: 16px;
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+footer p {
+  margin: 0 0 4px;
+}
+
+.panel {
+  margin: 0 0 16px;
+  padding: 16px;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.aviso {
+  margin: 8px 0 16px;
+  padding: 12px 16px;
+  background: #fff6d6;
+  border: 1px solid #b58900;
+  border-radius: 8px;
+}
+
+.error {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  background: #fde8e8;
+  border: 1px solid #b42318;
+  border-radius: 8px;
+  color: #7a1a12;
+  font-weight: 600;
+}
+
+.nota {
+  margin: 8px 0 0;
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+/* --- Controles --- */
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+select,
+input,
+button {
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid #8a8984;
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--texto);
+  font: inherit;
+}
+
+button {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+select:focus-visible,
+input:focus-visible,
+button:focus-visible {
+  outline: 3px solid #f0a000;
+  outline-offset: 2px;
+}
+
+/* --- Resultado: el color refuerza al texto y al símbolo, no los sustituye --- */
+
+.resultado {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 2px solid;
+  border-radius: 8px;
+}
+
+.resultado p {
+  margin: 0 0 4px;
+}
+
+.resultado .nivel {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.riesgo-bajo {
+  background: #e6f5ea;
+  border-color: #17803d;
+  color: #0e4f26;
+}
+
+.riesgo-moderado {
+  background: #fff3d6;
+  border-color: #b26a00;
+  color: #5e3800;
+}
+
+.riesgo-alto {
+  background: #fde8e8;
+  border-color: #b42318;
+  color: #7a1a12;
+}
+
+.resultado .nota {
+  color: inherit;
+}
+
+/* --- Gráficos --- */
+
+.graficos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.graficos .panel {
+  margin: 0;
+  /* Permite que Chart.js encoja el lienzo dentro de la rejilla. */
+  min-width: 0;
+}
+
+figcaption {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.lienzo {
+  position: relative;
+  height: 260px;
+}
+
+/* --- Tablas --- */
+
+.tabla-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  padding: 8px;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  color: var(--texto-suave);
+}

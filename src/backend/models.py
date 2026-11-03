@@ -60,6 +60,9 @@ class MetricaDiaria(BaseModel):
     carga_7d: float | None
     carga_28d: float | None
     acwr: float | None
+    fatiga_media_7d: float | None
+    dolor_muscular_media_7d: float | None
+    calidad_sueno_media_7d: float | None
     sin_seguimiento: int
 
 

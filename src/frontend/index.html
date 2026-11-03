@@ -2,12 +2,113 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AthletaGuard</title>
+  <!-- Sin icono: evita una petición 404 al abrir la página. -->
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- El dashboard se implementa en la Fase 5. -->
-  <h1>AthletaGuard</h1>
+  <header>
+    <h1>AthletaGuard</h1>
+    <p>Monitorización de carga y fatiga percibida</p>
+  </header>
+
+  <main>
+    <!-- Aviso obligatorio (NF2 HU09): siempre visible, sin depender de los datos. -->
+    <p class="aviso" id="aviso">
+      <strong>Aviso:</strong> indicador orientativo de fatiga percibida para el día siguiente.
+      <strong>No es un diagnóstico médico</strong> ni sustituye el criterio profesional.
+    </p>
+
+    <!-- Aquí aparecen los errores de la API. role="alert" hace que se anuncien al lector de pantalla. -->
+    <p class="error" id="error" role="alert" hidden></p>
+
+    <section class="panel" aria-labelledby="titulo-filtros">
+      <h2 id="titulo-filtros">Deportista y periodo</h2>
+      <form class="controles" id="form-filtros">
+        <label>Deportista
+          <select id="deportista" required></select>
+        </label>
+        <label>Desde
+          <input type="date" id="desde">
+        </label>
+        <label>Hasta
+          <input type="date" id="hasta">
+        </label>
+        <button type="submit">Aplicar filtro</button>
+      </form>
+      <p class="nota" id="resumen-deportista"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-riesgo">
+      <h2 id="titulo-riesgo">Riesgo de sobrecarga (indicador de fatiga percibida para mañana)</h2>
+      <form class="controles" id="form-prediccion">
+        <label>Datos hasta el día (opcional)
+          <input type="date" id="fecha-prediccion">
+        </label>
+        <button type="submit" id="boton-predecir">Calcular riesgo</button>
+      </form>
+      <p class="nota">Sin fecha se usa el último día válido de la deportista. Los datos terminan en 2021.</p>
+      <!-- El nivel se muestra con color, símbolo y texto: nunca solo con color. -->
+      <div class="resultado" id="resultado" aria-live="polite" hidden></div>
+    </section>
+
+    <section class="graficos" aria-label="Gráficos de evolución">
+      <figure class="panel">
+        <figcaption>Carga acumulada en 7 días (sRPE)</figcaption>
+        <div class="lienzo"><canvas id="grafico-carga" role="img" aria-label="Evolución de la carga acumulada en 7 días"></canvas></div>
+        <p class="nota" id="valor-carga"></p>
+      </figure>
+      <figure class="panel">
+        <figcaption>ACWR (carga aguda / carga crónica)</figcaption>
+        <div class="lienzo"><canvas id="grafico-acwr" role="img" aria-label="Evolución del ACWR"></canvas></div>
+        <p class="nota" id="valor-acwr"></p>
+      </figure>
+      <figure class="panel">
+        <figcaption>Carga por semana (sRPE)</figcaption>
+        <div class="lienzo"><canvas id="grafico-semanal" role="img" aria-label="Carga total por semana"></canvas></div>
+        <p class="nota" id="valor-semanal"></p>
+      </figure>
+      <figure class="panel">
+        <figcaption>Bienestar: media de 7 días (escala de 1 a 5; se asume que un valor alto es mejor)</figcaption>
+        <div class="lienzo"><canvas id="grafico-bienestar" role="img" aria-label="Evolución de la media de 7 días de fatiga, dolor muscular y calidad de sueño"></canvas></div>
+        <p class="nota" id="valor-bienestar"></p>
+      </figure>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-predicciones">
+      <h2 id="titulo-predicciones">Histórico de predicciones</h2>
+      <div class="tabla-scroll">
+        <table>
+          <thead>
+            <tr><th>Datos hasta</th><th>Día previsto</th><th>Riesgo</th><th>Probabilidad</th><th>Modelo</th><th>Calculada</th></tr>
+          </thead>
+          <tbody id="tabla-predicciones"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="titulo-sesiones">
+      <h2 id="titulo-sesiones">Últimas sesiones</h2>
+      <div class="tabla-scroll">
+        <table>
+          <thead>
+            <tr><th>Fecha</th><th>Duración (min)</th><th>RPE</th><th>sRPE</th></tr>
+          </thead>
+          <tbody id="tabla-sesiones"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p id="estado-servicio">Comprobando el servicio...</p>
+    <p>Datos: SoccerMon (Midoglu et al., CC BY 4.0, DOI 10.5281/zenodo.10033832).</p>
+  </footer>
+
+  <!-- Chart.js 4.4.9 incluido en el repositorio: el dashboard funciona sin internet. -->
+  <script src="chart.umd.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
