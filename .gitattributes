@@ -1,0 +1,2 @@
+# Los datos originales se guardan byte a byte: Git no debe convertir sus fines de linea.
+data/raw/subjective/** -text
