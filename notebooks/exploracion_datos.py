@@ -96,6 +96,25 @@ def analizar_ceros(carga, fatiga, inicio, fin):
     print(tabla.round(3).to_string())
 
 
+def analizar_escalas_y_historial(carga, bienestar, inicio, fin):
+    """Muestra los indicios sobre el sentido de las escalas y el historial por jugadora."""
+    print("
+== Sentido de las escalas e historial ==")
+    carga_ayer = carga.shift(1).stack().rename("carga_ayer")
+    for nombre in ("fatigue", "soreness"):
+        tabla = pd.concat([bienestar[nombre].stack().rename("valor"), carga_ayer], axis=1).dropna()
+        print(f"Spearman {nombre} frente a la carga de ayer: {tabla.valor.corr(tabla.carga_ayer, method='spearman'):.3f}")
+    dias_activos = (carga > 0).sum()
+    print(f"Jugadoras con menos de 100 dias con carga: {(dias_activos < 100).sum()} | menos de 60: {(dias_activos < 60).sum()}")
+    con_carga = sin_carga = reportes_con = reportes_sin = 0
+    for jugadora in carga.columns:
+        tramo = carga.loc[inicio[jugadora]:fin[jugadora], jugadora]
+        reporta = bienestar["fatigue"].loc[tramo.index, jugadora].notna()
+        con_carga += (tramo > 0).sum(); reportes_con += reporta[tramo > 0].sum()
+        sin_carga += (tramo == 0).sum(); reportes_sin += reporta[tramo == 0].sum()
+    print(f"Reporte de bienestar: {reportes_con / con_carga:.1%} con carga, {reportes_sin / sin_carga:.1%} sin carga")
+
+
 def analizar_lesiones(lesiones, episodios, carga, acwr, inicio, fin):
     """Muestra cuántas lesiones hay y si el ACWR las anticipa."""
     print("\n== Lesiones ==")
@@ -194,6 +213,7 @@ def main():
     resumir_archivos(sesiones, lesiones, carga, bienestar)
     comparar_carga(sesiones, carga)
     analizar_ceros(carga, bienestar["fatigue"], inicio, fin)
+    analizar_escalas_y_historial(carga, bienestar, inicio, fin)
     analizar_lesiones(lesiones, episodios, carga, acwr, inicio, fin)
 
     filas = crear_features_sondeo(carga, bienestar, inicio, fin)
