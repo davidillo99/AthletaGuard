@@ -1,104 +1,42 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from src.backend.services import (
-    init_db,
-    crear_deportista,
-    obtener_deportistas,
-    crear_sesion,
-    obtener_historial_deportista,
-    obtener_ultima_prediccion
-)
+"""Punto de entrada: crea la aplicación FastAPI y sirve la API y el dashboard.
 
-from src.backend.models import (
-    DeportistaCreate,
-    DeportistaResponse,
-    SesionCreate,
-    SesionResponse,
-    PrediccionResponse
-)
+Uso desde la raíz del repositorio: uvicorn src.backend.main:app
+"""
+
+from contextlib import asynccontextmanager
+
+import uvicorn
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
+from src.backend.api import router
+from src.backend.services import obtener_modelo
+from src.config import PORT, RAIZ
+
+
+@asynccontextmanager
+async def ciclo_de_vida(app):
+    """Carga el modelo al arrancar, para que la primera predicción no tarde más."""
+    obtener_modelo()
+    yield
 
 
 app = FastAPI(
     title="AthletaGuard API",
-    description="API REST para el sistema AthletaGuard",
-    version="0.1.0"
+    description=(
+        "API de AthletaGuard. Las predicciones son orientativas y "
+        "nunca constituyen un diagnóstico médico."
+    ),
+    version="1.0",
+    lifespan=ciclo_de_vida,
 )
+app.include_router(router)
 
-@app.on_event("startup")
-def startup_event():
-    init_db()
-
-
-# Permitimos las peticiones del frontend durante el desarrollo local
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# El dashboard se monta el último: si no, "/" taparía las rutas de la API.
+# Se sirve desde el mismo servidor, por lo que no hace falta configurar CORS.
+app.mount("/", StaticFiles(directory=RAIZ / "src" / "frontend", html=True), name="frontend")
 
 
-@app.get("/")
-def root():
-    return {
-        "project": "AthletaGuard",
-        "message": "API funcionando correctamente"
-    }
-
-
-@app.get("/health")
-def health():
-    return {
-        "status": "ok",
-        "service": "AthletaGuard API"
-    }
-
-@app.post("/athletes", response_model=DeportistaResponse)
-def create_athlete(deportista: DeportistaCreate):
-    return crear_deportista(
-        alias=deportista.alias,
-        edad=deportista.edad,
-        sexo=deportista.sexo,
-        nivel=deportista.nivel
-    )
-
-
-@app.get("/athletes", response_model=list[DeportistaResponse])
-def get_athletes():
-    return obtener_deportistas()
-
-@app.post("/sessions", response_model=SesionResponse)
-def create_session(sesion: SesionCreate):
-    return crear_sesion(
-        id_deportista=sesion.id_deportista,
-        fecha=sesion.fecha,
-        tipo=sesion.tipo,
-        duracion=sesion.duracion,
-        volumen=sesion.volumen,
-        rpe=sesion.rpe,
-        fc_media=sesion.fc_media,
-        fc_max=sesion.fc_max,
-        hrv=sesion.hrv,
-        potencia=sesion.potencia,
-        descanso=sesion.descanso
-    )
-
-@app.get("/athletes/{id_deportista}/history", response_model=list[SesionResponse])
-def get_athlete_history(id_deportista: int):
-    return obtener_historial_deportista(id_deportista)
-
-@app.get(
-    "/athletes/{id_deportista}/risk",
-    response_model=PrediccionResponse
-)
-def get_athlete_risk(id_deportista: int):
-    prediccion = obtener_ultima_prediccion(id_deportista)
-
-    if prediccion is None:
-        raise HTTPException(
-            status_code=404,
-            detail="No hay predicciones disponibles para este deportista"
-        )
-
-    return prediccion
+if __name__ == "__main__":
+    # Alternativa a uvicorn por consola: respeta la variable de entorno PORT.
+    uvicorn.run(app, host="127.0.0.1", port=PORT)
