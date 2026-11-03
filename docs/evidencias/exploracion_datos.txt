@@ -1,0 +1,54 @@
+== Archivos ==
+Jugadoras: 50 | Dias: 731 | 2020-01-01 a 2021-12-31
+Sesiones: 16265 | srpe != rpe*duracion: 0
+Duplicados exactos: 76 | srpe=0: 6
+Sesiones por jugadora y dia: {1: 12229, 2: 1881, 3: 78, 4: 6, 5: 2, 6: 1}
+fatigue: n=16992 min=1.0 max=5.0 nulos=53.5%
+mood: n=16999 min=1.0 max=5.0 nulos=53.5%
+readiness: n=16997 min=1.0 max=10.0 nulos=53.5%
+sleep_duration: n=16981 min=1.0 max=12.0 nulos=53.5%
+sleep_quality: n=16994 min=1.0 max=5.0 nulos=53.5%
+soreness: n=16999 min=1.0 max=5.0 nulos=53.5%
+stress: n=16997 min=1.0 max=5.0 nulos=53.5%
+Lesiones: 162 filas, 15 jugadoras
+
+== daily_load frente a session.json ==
+Dias distintos: 110 | jugadoras: 3 | daily_load mayor: 110
+
+== Reporte de bienestar segun la racha sin carga ==
+            size   mean
+racha                  
+(0, 1]      2706  0.771
+(1, 2]      1278  0.687
+(2, 3]       654  0.602
+(3, 6]       934  0.485
+(6, 13]      948  0.334
+(13, 27]    1022  0.194
+(27, 1000]  3325  0.027
+
+== Lesiones ==
+Filas por trimestre: {Period('2020Q1', 'Q-DEC'): 38, Period('2020Q2', 'Q-DEC'): 91, Period('2020Q3', 'Q-DEC'): 18, Period('2020Q4', 'Q-DEC'): 2, Period('2021Q1', 'Q-DEC'): 8, Period('2021Q3', 'Q-DEC'): 3, Period('2021Q4', 'Q-DEC'): 2}
+Episodios: 40 | por equipo: {'TeamA': 36, 'TeamB': 4}
+Episodios desde 2021-07-01: 5
+Lesion en 7 dias por banda de ACWR original:
+           size  sum    mean
+banda                       
+bajo      19715  184  0.0093
+moderado   1533    6  0.0039
+alto       2201   20  0.0091
+
+== Sondeo de etiquetas (train 2020, validacion 2021-S1; no es un resultado del proyecto) ==
+A lesion en 7 dias           todas      pos train=  147 pos valid=   28 base=0.004 AUC-PR=0.030 ROC=0.797
+A lesion en 7 dias           solo carga pos train=  147 pos valid=   28 base=0.004 AUC-PR=0.008 ROC=0.467
+A lesion en 28 dias          todas      pos train=  362 pos valid=   76 base=0.011 AUC-PR=0.034 ROC=0.760
+A lesion en 28 dias          solo carga pos train=  362 pos valid=   76 base=0.011 AUC-PR=0.014 ROC=0.495
+B ACWR>1.5 hoy (circular)    todas      pos train=  615 pos valid=  723 base=0.100 AUC-PR=0.998 ROC=0.999
+B ACWR>1.5 hoy (circular)    solo carga pos train=  615 pos valid=  723 base=0.100 AUC-PR=0.998 ROC=0.999
+B2 ACWR>1.5 en 7 dias        todas      pos train=  621 pos valid=  742 base=0.103 AUC-PR=0.526 ROC=0.885
+B2 ACWR>1.5 en 7 dias        solo carga pos train=  621 pos valid=  742 base=0.103 AUC-PR=0.515 ROC=0.875
+C1 fatiga<=2 manana          todas      pos train=  985 pos valid=  800 base=0.161 AUC-PR=0.465 ROC=0.790
+C1 fatiga<=2 manana          solo carga pos train=  985 pos valid=  800 base=0.161 AUC-PR=0.175 ROC=0.520
+C2 readiness<=5 manana       todas      pos train=  882 pos valid=  626 base=0.126 AUC-PR=0.520 ROC=0.842
+C2 readiness<=5 manana       solo carga pos train=  882 pos valid=  626 base=0.126 AUC-PR=0.146 ROC=0.517
+C3 fatiga+dolor<=5 manana    todas      pos train= 2407 pos valid= 1972 base=0.397 AUC-PR=0.776 ROC=0.825
+C3 fatiga+dolor<=5 manana    solo carga pos train= 2407 pos valid= 1972 base=0.397 AUC-PR=0.441 ROC=0.542
