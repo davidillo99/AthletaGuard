@@ -1,0 +1,149 @@
+{
+  "modelo": "RandomForest",
+  "version": "1.0",
+  "etiqueta": "fatiga del dia siguiente <= 2 (fatiga percibida alta)",
+  "semilla": 42,
+  "mejores_parametros": {
+    "clasificador__max_depth": 10,
+    "clasificador__min_samples_leaf": 20
+  },
+  "umbrales": {
+    "moderado": 0.37623542155969164,
+    "alto": 0.5233598775869832
+  },
+  "datos": {
+    "train_n": 11114,
+    "train_positivos": 1764,
+    "test_n": 4467,
+    "test_positivos": 697,
+    "inicio_test": "2021-07-01"
+  },
+  "train_auc_pr": 0.6387684063249114,
+  "validacion": {
+    "auc_pr": 0.4296411889730602,
+    "alerta_desde_moderado": {
+      "recall": 0.8005082592121983,
+      "precision": 0.258567617484096,
+      "f1": 0.39087947882736157,
+      "matriz_confusion": {
+        "vn": 5071,
+        "fp": 3613,
+        "fn": 314,
+        "vp": 1260
+      }
+    },
+    "alerta_solo_alto": {
+      "recall": 0.5470139771283354,
+      "precision": 0.3894165535956581,
+      "f1": 0.4549537648612946,
+      "matriz_confusion": {
+        "vn": 7334,
+        "fp": 1350,
+        "fn": 713,
+        "vp": 861
+      }
+    }
+  },
+  "test": {
+    "modelo": {
+      "auc_pr": 0.4695352557607814,
+      "alerta_desde_moderado": {
+        "recall": 0.763271162123386,
+        "precision": 0.27882599580712786,
+        "f1": 0.40844529750479847,
+        "matriz_confusion": {
+          "vn": 2394,
+          "fp": 1376,
+          "fn": 165,
+          "vp": 532
+        }
+      },
+      "alerta_solo_alto": {
+        "recall": 0.5581061692969871,
+        "precision": 0.3828740157480315,
+        "f1": 0.45417396380618796,
+        "matriz_confusion": {
+          "vn": 3143,
+          "fp": 627,
+          "fn": 308,
+          "vp": 389
+        }
+      }
+    },
+    "referencias": {
+      "dummy": {
+        "auc_pr": 0.15603313185583165,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "matriz_confusion": {
+          "vn": 3770,
+          "fp": 0,
+          "fn": 697,
+          "vp": 0
+        }
+      },
+      "persistencia": {
+        "auc_pr": 0.24562980551660812,
+        "recall": 0.3615494978479197,
+        "precision": 0.40384615384615385,
+        "f1": 0.38152914458743376,
+        "matriz_confusion": {
+          "vn": 3398,
+          "fp": 372,
+          "fn": 445,
+          "vp": 252
+        }
+      }
+    },
+    "por_nivel": {
+      "bajo": {
+        "n": 2559,
+        "tasa_fatiga_alta": 0.06447831184056271
+      },
+      "moderado": {
+        "n": 892,
+        "tasa_fatiga_alta": 0.16031390134529147
+      },
+      "alto": {
+        "n": 1016,
+        "tasa_fatiga_alta": 0.3828740157480315
+      }
+    },
+    "por_equipo": {
+      "TeamA": {
+        "n": 3227,
+        "tasa_base": 0.16733808490858382,
+        "auc_pr": 0.5218268194819861
+      },
+      "TeamB": {
+        "n": 1240,
+        "tasa_base": 0.12661290322580646,
+        "auc_pr": 0.2548237939298689
+      }
+    }
+  },
+  "importancias": {
+    "fatiga_media_7d": 0.27571861913392043,
+    "disposicion_media_7d": 0.1195912956496241,
+    "dolor_muscular_media_7d": 0.09120731597457493,
+    "fatiga_var": 0.0641986409275762,
+    "horas_sueno_media_7d": 0.04310040087196439,
+    "calidad_sueno_media_7d": 0.04070407675122209,
+    "disposicion_var": 0.039619589929483154,
+    "acwr": 0.03316835290206152,
+    "cambio_carga_semanal": 0.03207048950539835,
+    "media_movil": 0.03021709299493978,
+    "carga_7d": 0.029232734018587524,
+    "carga_28d": 0.02802665516714502,
+    "calidad_sueno_var": 0.02670676149631212,
+    "dolor_muscular_var": 0.0247108021229567,
+    "estres_media_7d": 0.023004555923831695,
+    "horas_sueno_var": 0.022699025038033616,
+    "animo_media_7d": 0.02061859931833069,
+    "estres_var": 0.02035321711279053,
+    "animo_var": 0.018064446644094744,
+    "dias_descanso_7d": 0.00880551783737438,
+    "sesiones_7d": 0.008181810679778087
+  }
+}
