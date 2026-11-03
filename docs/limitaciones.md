@@ -13,6 +13,8 @@ No hay bugs conocidos que impidan el flujo completo. Estos comportamientos puede
 5. **Aviso de obsolescencia en las pruebas.** Starlette recomienda sustituir `httpx` por `httpx2` en el cliente de pruebas. No afecta a los resultados.
 6. **Los selectores de fecha admiten días sin datos.** El error se muestra después, al pedir la predicción (422).
 7. **Reentrenar modifica un archivo versionado.** `models/metadata.json` guarda la fecha de entrenamiento, así que aparece como cambiado en Git. Las métricas no cambian.
+8. **El filtro de fechas también afecta al histórico de predicciones.** Se filtra por el día de los datos, por lo que una predicción fuera del periodo elegido no aparece en la tabla.
+9. **Clientes distintos del navegador pueden tardar unos 2 segundos con `localhost`.** El servidor escucha solo en `127.0.0.1`; en la prueba con PowerShell, la petición por `localhost` tardó 2,1 segundos. En el navegador no supone un problema; también se puede usar `http://127.0.0.1:8000`.
 
 ## Limitaciones del modelo
 
