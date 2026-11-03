@@ -11,3 +11,20 @@ __pycache__/
 # Entornos virtuales locales
 .venv/
 venv/
+# Bases de datos en cualquier carpeta
+*.db
+
+# Artefactos que se regeneran con el pipeline
+data/processed/*
+!data/processed/.gitkeep
+models/*.joblib
+
+# Caché de pytest
+.pytest_cache/
+
+# Copia comprimida del dataset: los datos ya están en data/raw/subjective/
+subjective (1).zip
+
+# Material del curso: no se versiona
+docs/NF3_Actividad_Proyecto_IA_Big_Data_2609.pdf
+docs/NF3_Rubrica_Proyecto_IA_Big_Data_2609.pdf
