@@ -12,6 +12,7 @@ No hay bugs conocidos que impidan el flujo completo. Estos comportamientos puede
 4. **`PORT` solo funciona con `python -m src.backend.main`.** El comando `uvicorn` usa `--port` o, por defecto, el 8000.
 5. **Aviso de obsolescencia en las pruebas.** Starlette recomienda sustituir `httpx` por `httpx2` en el cliente de pruebas. No afecta a los resultados.
 6. **Los selectores de fecha admiten días sin datos.** El error se muestra después, al pedir la predicción (422).
+7. **Reentrenar modifica un archivo versionado.** `models/metadata.json` guarda la fecha de entrenamiento, así que aparece como cambiado en Git. Las métricas no cambian.
 
 ## Limitaciones del modelo
 
@@ -33,7 +34,7 @@ No hay bugs conocidos que impidan el flujo completo. Estos comportamientos puede
 2. **Datos autoinformados.** Carga, bienestar y lesiones dependen de la percepción de cada jugadora y no están validados por personal médico.
 3. **Sesgo poblacional.** Son 50 futbolistas de dos equipos femeninos de élite de Noruega, en 2020 y 2021. Los resultados no son extrapolables a otros deportes, niveles o poblaciones (NF2 §8.2).
 4. **Sin HRV, frecuencia cardíaca ni potencia.** SoccerMon no las incluye en este subconjunto. Tampoco edad, sexo por persona, nivel ni tipo de sesión.
-5. **Muchos datos ausentes.** El 53,5 % de las celdas de bienestar está vacío, y la falta de reporte no es aleatoria: es del 88 % en días con carga y del 41 % en días sin carga dentro del periodo de cada jugadora. El modelo solo se entrena y evalúa en días cuyo día siguiente tiene reporte.
+5. **Muchos datos ausentes.** El 53,5 % de las celdas de bienestar está vacío, y esa ausencia no es aleatoria: se reporta el 88 % de los días con carga y el 41 % de los días sin carga dentro del periodo de cada jugadora. El modelo solo se entrena y evalúa en días cuyo día siguiente tiene reporte.
 6. **Un día sin carga no siempre es descanso.** El dataset no distingue descanso de falta de registro. Las rachas de hasta 13 días se tratan como descanso y las de 14 o más como "sin seguimiento". El límite es una decisión razonada, no un dato.
 7. **Historial desigual.** 13 jugadoras tienen menos de 100 días con carga, y 6 menos de 60.
 
