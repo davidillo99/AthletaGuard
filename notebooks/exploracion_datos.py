@@ -98,8 +98,7 @@ def analizar_ceros(carga, fatiga, inicio, fin):
 
 def analizar_escalas_y_historial(carga, bienestar, inicio, fin):
     """Muestra los indicios sobre el sentido de las escalas y el historial por jugadora."""
-    print("
-== Sentido de las escalas e historial ==")
+    print("\n== Sentido de las escalas e historial ==")
     carga_ayer = carga.shift(1).stack().rename("carga_ayer")
     for nombre in ("fatigue", "soreness"):
         tabla = pd.concat([bienestar[nombre].stack().rename("valor"), carga_ayer], axis=1).dropna()
