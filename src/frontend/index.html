@@ -9,9 +9,21 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>AthletaGuard</h1>
-    <p>Monitorización de carga y fatiga percibida</p>
+  <header class="cabecera">
+    <div class="cabecera-interior">
+      <!-- Escudo con línea de pulso: decorativo, el nombre ya está en el título. -->
+      <svg class="logo" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+        <path d="M24 3 6 10v13c0 11 7.6 19.4 18 22 10.4-2.6 18-11 18-22V10L24 3Z" fill="#0a6ea8" stroke="#7cc4ec" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M11 25h8l3-8 5 15 3-7h7" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <h1>AthletaGuard</h1>
+        <p>Monitorización de carga y fatiga percibida</p>
+      </div>
+    </div>
+    <svg class="pulso" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <polyline points="0,24 300,24 330,24 345,8 360,36 375,16 390,24 700,24 730,24 745,6 760,38 775,18 790,24 1200,24" fill="none" stroke="#7cc4ec" stroke-width="2" vector-effect="non-scaling-stroke"/>
+    </svg>
   </header>
 
   <main>
@@ -24,6 +36,7 @@
     <!-- Aquí aparecen los errores de la API. role="alert" hace que se anuncien al lector de pantalla. -->
     <p class="error" id="error" role="alert" hidden></p>
 
+    <div class="herramientas">
     <section class="panel" aria-labelledby="titulo-filtros">
       <h2 id="titulo-filtros">Deportista y periodo</h2>
       <form class="controles" id="form-filtros">
@@ -53,6 +66,7 @@
       <!-- El nivel se muestra con color, símbolo y texto: nunca solo con color. -->
       <div class="resultado" id="resultado" aria-live="polite" hidden></div>
     </section>
+    </div>
 
     <section class="graficos" aria-label="Gráficos de evolución">
       <figure class="panel">
@@ -61,7 +75,7 @@
         <p class="nota" id="valor-carga"></p>
       </figure>
       <figure class="panel">
-        <figcaption>ACWR (carga aguda / carga crónica)</figcaption>
+        <figcaption>ACWR (carga aguda / carga crónica). Zona sombreada: de 0,8 a 1,3</figcaption>
         <div class="lienzo"><canvas id="grafico-acwr" role="img" aria-label="Evolución del ACWR"></canvas></div>
         <p class="nota" id="valor-acwr"></p>
       </figure>

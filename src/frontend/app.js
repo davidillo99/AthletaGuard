@@ -12,6 +12,10 @@ const NUM_SESIONES_VISIBLES = 20;
 const formatear = (valor, decimales) =>
   valor.toLocaleString("es-ES", { minimumFractionDigits: decimales, maximumFractionDigits: decimales });
 
+// Apariencia común de los gráficos: misma tipografía y color de texto que la página.
+Chart.defaults.font.family = '"Segoe UI Variable", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif';
+Chart.defaults.color = "#4b5d68";
+
 // Gráficos creados, por id de canvas. Se destruyen antes de volver a dibujar.
 const graficos = {};
 
@@ -69,7 +73,7 @@ function dibujarGrafico(id, tipo, etiquetas, series, opcionesEjeY = {}) {
         borderColor: serie.color,
         backgroundColor: serie.color,
         borderWidth: tipo === "line" ? 2 : 0,
-        borderRadius: tipo === "bar" ? 4 : 0,
+        borderRadius: tipo === "bar" ? 6 : 0,
         pointRadius: 0,
         pointHoverRadius: 4,
         // Un hueco en el gráfico significa que no hay dato: no se une con una línea.
@@ -83,7 +87,8 @@ function dibujarGrafico(id, tipo, etiquetas, series, opcionesEjeY = {}) {
       interaction: { mode: "index", intersect: false },
       plugins: {
         // Con una sola serie, el título de la tarjeta ya la identifica.
-        legend: { display: series.length > 1, position: "bottom" },
+        legend: { display: series.length > 1, position: "bottom", labels: { usePointStyle: true, boxWidth: 8 } },
+        tooltip: { backgroundColor: "#0e2a38", padding: 10, cornerRadius: 8 },
       },
       scales: {
         x: { grid: { display: false }, ticks: { maxTicksLimit: 6, maxRotation: 0, autoSkipPadding: 24 } },
@@ -200,7 +205,16 @@ function mostrarResultado(prediccion) {
   aviso.className = "nota";
   aviso.textContent = prediccion.aviso;
 
-  caja.append(nivel, detalle, aviso);
+  // Barra de probabilidad: refuerza visualmente el porcentaje que ya aparece en texto.
+  const medidor = document.createElement("div");
+  medidor.className = "medidor";
+  medidor.setAttribute("aria-hidden", "true");
+  const relleno = document.createElement("div");
+  relleno.className = "medidor-relleno";
+  relleno.style.width = `${Math.min(100, Math.max(0, prediccion.probabilidad * 100))}%`;
+  medidor.append(relleno);
+
+  caja.append(nivel, medidor, detalle, aviso);
   caja.hidden = false;
 }
 
